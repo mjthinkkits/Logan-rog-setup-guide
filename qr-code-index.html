@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logan's Gift - Setup Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .qr-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .qr-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .qr-card.featured {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #ff0050, #00d9ff);
+            color: white;
+            padding: 3rem;
+        }
+
+        .qr-card.featured h2 {
+            color: white;
+        }
+
+        .qr-card.featured p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .qr-code {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .qr-code img {
+            width: 200px;
+            height: 200px;
+            display: block;
+        }
+
+        .featured .qr-code {
+            background: white;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .url-display {
+            background: #f5f5f5;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            word-break: break-all;
+            margin-top: 1rem;
+            color: #333;
+        }
+
+        .featured .url-display {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .instructions {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .instructions h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol {
+            margin-left: 1.5rem;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 2rem;
+            opacity: 0.8;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            font-weight: bold;
+        }
+
+        .featured .badge {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 1rem;
+            }
+
+            .instructions {
+                display: none;
+            }
+
+            .qr-card {
+                break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .qr-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .qr-card.featured {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎁 Logan's Christmas Gift</h1>
+            <p>Scan the QR codes below to access your setup guides</p>
+        </div>
+
+        <div class="qr-grid">
+            <!-- Main Setup Guide - Featured -->
+            <div class="qr-card featured">
+                <h2>🎮 ROG Handheld Setup Guide</h2>
+                <p>Complete interactive guide for your gaming setup</p>
+                <div class="badge">START HERE</div>
+                <div class="qr-code">
+                    <img id="qr-setup-guide" src="" alt="QR Code">
+                </div>
+                <div class="url-display" id="url-setup-guide">Scan to get started!</div>
+            </div>
+
+            <!-- Instructions Page -->
+            <div class="qr-card">
+                <h2>📖 Getting Started</h2>
+                <p>Quick overview and hosting instructions</p>
+                <div class="badge">HELPFUL</div>
+                <div class="qr-code">
+                    <img id="qr-instructions" src="" alt="QR Code">
+                </div>
+                <div class="url-display" id="url-instructions">Setup instructions</div>
+            </div>
+
+            <!-- This Page (for sharing) -->
+            <div class="qr-card">
+                <h2>🔗 Share This Page</h2>
+                <p>QR code to share all guides at once</p>
+                <div class="badge">SHARE</div>
+                <div class="qr-code">
+                    <img id="qr-index" src="" alt="QR Code">
+                </div>
+                <div class="url-display" id="url-index">This QR code page</div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>📱 How to Use These QR Codes</h3>
+            <ol>
+                <li><strong>Open your phone's camera</strong> - No special app needed!</li>
+                <li><strong>Point it at any QR code</strong> - Hold steady for 2-3 seconds</li>
+                <li><strong>Tap the notification</strong> - It will open the guide in your browser</li>
+                <li><strong>Bookmark for easy access</strong> - Save to your home screen</li>
+            </ol>
+            
+            <h3 style="margin-top: 2rem;">➕ Want to Add More Pages?</h3>
+            <p style="color: #666; line-height: 1.6;">
+                See the JavaScript section below (around line 230) - just add your new page to the URLS object 
+                and add a new card section in the HTML. Copy any existing card and update the IDs!
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>Merry Christmas, Logan! 🎄</p>
+            <p>Love, Dad</p>
+        </div>
+    </div>
+
+    <script>
+        // QR Code API (using qrserver.com - free, no API key needed)
+        function generateQR(url, elementId) {
+            const qrAPI = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+            document.getElementById(elementId).src = qrAPI;
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 🎯 CONFIGURED FOR: mjthinkkits
+        // ═══════════════════════════════════════════════════════════════
+        
+        const GITHUB_USERNAME = 'mjthinkkits';
+        const BASE_URL = `https://${GITHUB_USERNAME}.github.io/logan-rog-setup-guide`;
+        
+        const URLS = {
+            setupGuide: `${BASE_URL}/rog-handheld-setup-guide.html`,
+            instructions: `${BASE_URL}/OPEN-ME-FIRST.html`,
+            index: `${BASE_URL}/qr-code-index.html`,  // This page itself
+            
+            // ═══════════════════════════════════════════════════════════
+            // 💡 TO ADD MORE PAGES: Add new entries here like this:
+            // ═══════════════════════════════════════════════════════════
+            // myNewPage: `${BASE_URL}/my-new-page.html`,
+            // anotherGuide: `${BASE_URL}/another-guide.html`,
+        };
+
+        // Generate QR codes for all pages
+        generateQR(URLS.setupGuide, 'qr-setup-guide');
+        generateQR(URLS.instructions, 'qr-instructions');
+        generateQR(URLS.index, 'qr-index');
+
+        // Update URL displays
+        document.getElementById('url-setup-guide').textContent = URLS.setupGuide;
+        document.getElementById('url-instructions').textContent = URLS.instructions;
+        document.getElementById('url-index').textContent = URLS.index;
+    </script>
+</body>
+</html>
