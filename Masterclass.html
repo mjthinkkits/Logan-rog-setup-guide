@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Christmas Gift</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load React and ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Load Babel for JSX support -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: white; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // --- ICON COMPONENTS ---
+        // Broken down into multi-line to prevent copy-paste errors
+        
+        const Sparkles = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L12 3Z"/>
+            </svg>
+        );
+
+        const Star = ({ className, fill }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill={fill || "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+        );
+
+        const Video = ({ className }) => (
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="m22 8-6 4 6 4V8Z"/>
+                <rect width="14" height="12" x="2" y="6" rx="2" ry="2"/>
+            </svg>
+        );
+
+        const Film = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M7 3v18"/>
+                <path d="M3 7.5h4"/>
+                <path d="M3 12h18"/>
+                <path d="M3 16.5h4"/>
+                <path d="M17 3v18"/>
+                <path d="M17 7.5h4"/>
+                <path d="M17 16.5h4"/>
+            </svg>
+        );
+
+        const Gift = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <rect x="3" y="8" width="18" height="4" rx="1"/>
+                <path d="M12 8v13"/>
+                <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/>
+                <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>
+            </svg>
+        );
+
+        const Check = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M20 6 9 17l-5-5"/>
+            </svg>
+        );
+
+        const MonitorPlay = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="m10 7 5 3-5 3Z" />
+                <rect width="20" height="14" x="2" y="3" rx="2" />
+                <path d="M12 17v4" />
+                <path d="M8 21h8" />
+            </svg>
+        );
+
+        function App() {
+            const [isRevealed, setIsRevealed] = useState(false);
+
+            // The gift code - you can edit this!
+            const GIFT_CODE = "MC-2024-CHRISTMAS-GIFT";
+
+            return (
+                <div className="min-h-screen bg-neutral-950 flex items-center justify-center p-4 font-sans text-white">
+                <div className="w-full max-w-2xl bg-black rounded-2xl overflow-hidden shadow-2xl border border-neutral-800 relative">
+                    
+                    {/* Decorative Background Glow */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-64 bg-red-900/20 blur-[100px] rounded-full pointer-events-none" />
+
+                    {/* Header */}
+                    <div className="relative z-10 bg-gradient-to-r from-red-900 via-red-800 to-red-900 p-6 text-center shadow-lg">
+                    <div className="flex items-center justify-center space-x-2 mb-2 opacity-90">
+                        <Sparkles className="w-4 h-4 text-yellow-200 animate-pulse" />
+                        <span className="text-xs font-bold tracking-[0.3em] text-yellow-100 uppercase">Merry Christmas</span>
+                        <Sparkles className="w-4 h-4 text-yellow-200 animate-pulse" />
+                    </div>
+                    <h1 className="text-2xl md:text-3xl font-serif font-bold text-white tracking-wide">
+                        A Gift to Fuel Your Passion
+                    </h1>
+                    </div>
+
+                    <div className="p-6 md:p-10 relative z-10">
+                    
+                    {/* Logo Section (Linked) */}
+                    <div className="text-center mb-8">
+                        <a href="https://www.masterclass.com" target="_blank" rel="noopener noreferrer" className="inline-block relative group cursor-pointer hover:opacity-80 transition-opacity">
+                            <h2 className="text-5xl md:text-6xl font-serif tracking-tighter text-white mb-2">
+                                MasterClass
+                            </h2>
+                            <div className="h-1.5 w-24 bg-red-600 mx-auto rounded-full group-hover:w-full transition-all duration-700 ease-in-out"></div>
+                            <p className="mt-3 text-neutral-400 text-sm tracking-[0.25em] uppercase font-medium">Annual All-Access Membership</p>
+                        </a>
+                    </div>
+
+                    {/* Hero Section: Steve Martin (Linked) */}
+                    <a href="https://www.masterclass.com/classes/steve-martin-teaches-comedy" target="_blank" rel="noopener noreferrer" className="block bg-neutral-900/80 rounded-xl overflow-hidden border border-neutral-800 mb-8 transition-all hover:scale-[1.01] hover:border-red-900/50 duration-300 group cursor-pointer">
+                        <div className="relative h-56 md:h-64 bg-neutral-800">
+                        
+                            <img 
+                            src="https://images.unsplash.com/photo-1516280440614-6697288d5d38?auto=format&fit=crop&q=80&w=1000" 
+                            alt="Steve Martin Comedy" 
+                            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                            />
+                        
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/20 to-transparent"></div>
+                        
+                        {/* Content Overlay */}
+                        <div className="absolute bottom-0 left-0 p-6 w-full">
+                            <div className="inline-flex items-center space-x-2 bg-red-600/90 text-white text-[10px] font-bold px-2 py-1 rounded mb-3 backdrop-blur-sm">
+                            <Star className="w-3 h-3 fill-current" />
+                            <span className="uppercase tracking-wider">Recommended Course</span>
+                            </div>
+                            <h3 className="text-2xl font-bold text-white mb-1 leading-tight group-hover:text-red-100 transition-colors">Steve Martin Teaches Comedy</h3>
+                            <p className="text-neutral-300 text-sm line-clamp-2">Finding your comedic voice, delivery, timing, and writing for the stage.</p>
+                        </div>
+                        </div>
+                    </a>
+
+                    {/* Grid of Instructors */}
+                    <div className="mb-10">
+                        <div className="flex items-center space-x-3 mb-5 border-b border-neutral-800 pb-3">
+                        <Video className="w-4 h-4 text-red-500" />
+                        <h4 className="text-xs font-bold text-neutral-400 uppercase tracking-widest">
+                            Plus Acting & Film Legends
+                        </h4>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <InstructorRow 
+                            icon={<Star className="w-4 h-4" />} 
+                            name="Samuel L. Jackson" 
+                            topic="Acting & Auditioning"
+                            link="https://www.masterclass.com/classes/samuel-l-jackson-teaches-acting"
+                        />
+                        <InstructorRow 
+                            icon={<Film className="w-4 h-4" />} 
+                            name="Werner Herzog" 
+                            topic="Filmmaking" 
+                            link="https://www.masterclass.com/classes/werner-herzog-teaches-filmmaking"
+                        />
+                        <InstructorRow 
+                            icon={<MonitorPlay className="w-4 h-4" />} 
+                            name="Natalie Portman" 
+                            topic="Acting & Empathy" 
+                            link="https://www.masterclass.com/classes/natalie-portman-teaches-acting"
+                        />
+                        <InstructorRow 
+                            icon={<Video className="w-4 h-4" />} 
+                            name="Martin Scorsese" 
+                            topic="Directing" 
+                            link="https://www.masterclass.com/classes/martin-scorsese-teaches-filmmaking"
+                        />
+                        </div>
+                    </div>
+
+                    {/* Interactive Reveal Section */}
+                    <div className="bg-neutral-900 rounded-xl p-8 text-center border border-dashed border-neutral-700 relative overflow-hidden group">
+                        {!isRevealed ? (
+                        <div className="relative z-10">
+                            <div className="w-16 h-16 bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <Gift className="w-8 h-8 text-red-500" />
+                            </div>
+                            <h3 className="text-lg font-bold text-white mb-2">Ready to Start Learning?</h3>
+                            <p className="text-neutral-400 text-sm mb-6">Click below to reveal your redemption code</p>
+                            
+                            <button 
+                            onClick={() => setIsRevealed(true)}
+                            className="bg-white text-black font-bold py-3 px-8 rounded-full hover:bg-neutral-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] active:scale-95"
+                            >
+                            Reveal Gift Code
+                            </button>
+                        </div>
+                        ) : (
+                        <div className="animate-in fade-in zoom-in duration-500 relative z-10">
+                            <div className="w-16 h-16 bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4 border border-green-800">
+                            <Check className="w-8 h-8 text-green-500" />
+                            </div>
+                            <h3 className="text-sm font-bold text-neutral-400 uppercase tracking-widest mb-3">Your Redemption Code</h3>
+                            
+                            <div className="bg-black border border-neutral-700 rounded-lg p-4 mb-4 font-mono text-xl md:text-2xl text-white tracking-widest select-all shadow-inner">
+                            {GIFT_CODE}
+                            </div>
+                            
+                            <p className="text-neutral-500 text-xs italic">
+                            Go to MasterClass.com/redeem to activate
+                            </p>
+                        </div>
+                        )}
+                    </div>
+
+                    {/* Personal Note */}
+                    <div className="mt-8 text-center">
+                        <p className="text-neutral-400 italic text-sm font-serif">
+                        "Sending you this to support your acting journey. Can't wait to see what you create!"
+                        </p>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            );
+        }
+
+        // Helper Component for the grid (Updated with Link support)
+        function InstructorRow({ icon, name, topic, link }) {
+            return (
+                <a 
+                    href={link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center p-3 rounded-lg bg-neutral-900/50 border border-neutral-800/50 hover:bg-neutral-800 hover:border-neutral-700 transition-colors cursor-pointer group"
+                >
+                <div className="w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center text-neutral-400 group-hover:text-white group-hover:bg-red-600 transition-colors">
+                    {icon}
+                </div>
+                <div className="ml-3">
+                    <h5 className="text-sm font-bold text-white group-hover:text-red-100 transition-colors">{name}</h5>
+                    <p className="text-[10px] text-neutral-500 uppercase tracking-wider">{topic}</p>
+                </div>
+                </a>
+            );
+        }
+
+        // Mount the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>                    {/* Interactive Reveal Section */}
+                    <div className="bg-neutral-900 rounded-xl p-8 text-center border border-dashed border-neutral-700 relative overflow-hidden group">
+                        {!isRevealed ? (
+                        <div className="relative z-10">
+                            <div className="w-16 h-16 bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <Gift className="w-8 h-8 text-red-500" />
+                            </div>
+                            <h3 className="text-lg font-bold text-white mb-2">Ready to Start Learning?</h3>
+                            <p className="text-neutral-400 text-sm mb-6">Click below to reveal your redemption code</p>
+                            
+                            <button 
+                            onClick={() => setIsRevealed(true)}
+                            className="bg-white text-black font-bold py-3 px-8 rounded-full hover:bg-neutral-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] active:scale-95"
+                            >
+                            Reveal Gift Code
+                            </button>
+                        </div>
+                        ) : (
+                        <div className="animate-in fade-in zoom-in duration-500 relative z-10">
+                            <div className="w-16 h-16 bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4 border border-green-800">
+                            <Check className="w-8 h-8 text-green-500" />
+                            </div>
+                            <h3 className="text-sm font-bold text-neutral-400 uppercase tracking-widest mb-3">Your Redemption Code</h3>
+                            
+                            <div className="bg-black border border-neutral-700 rounded-lg p-4 mb-4 font-mono text-xl md:text-2xl text-white tracking-widest select-all shadow-inner">
+                            {GIFT_CODE}
+                            </div>
+                            
+                            <p className="text-neutral-500 text-xs italic">
+                            Go to MasterClass.com/redeem to activate
+                            </p>
+                        </div>
+                        )}
+                    </div>
+
+                    {/* Personal Note */}
+                    <div className="mt-8 text-center">
+                        <p className="text-neutral-400 italic text-sm font-serif">
+                        "Sending you this to support your acting journey. Can't wait to see what you create!"
+                        </p>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            );
+        }
+
+        // Helper Component for the grid
+        function InstructorRow({ icon, name, topic }) {
+            return (
+                <div className="flex items-center p-3 rounded-lg bg-neutral-900/50 border border-neutral-800/50 hover:bg-neutral-800 hover:border-neutral-700 transition-colors cursor-default group">
+                <div className="w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center text-neutral-400 group-hover:text-white group-hover:bg-red-600 transition-colors">
+                    {icon}
+                </div>
+                <div className="ml-3">
+                    <h5 className="text-sm font-bold text-white group-hover:text-red-100 transition-colors">{name}</h5>
+                    <p className="text-[10px] text-neutral-500 uppercase tracking-wider">{topic}</p>
+                </div>
+                </div>
+            );
+        }
+
+        // Mount the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
